@@ -1,5 +1,6 @@
 MAIN= main
-TEXPARTS= 	$(MAIN).tex 
+TEXPARTS= 	$(MAIN).tex \
+			010intro.tex
 
 BIBPARTS= BIB/*.bib
 FIGPARTS= FIG/*.pdf FIG/*.png
@@ -13,7 +14,7 @@ $(MAIN).pdf: $(MAIN).tex
 	pdflatex $(MAIN).tex
 
 clean:
-	\rm -f *.dvi *.bbl *.aux *.log *.blg *.toc
+	\rm -f *.dvi *.bbl *.aux *.log *.blg *.toc main.pdf
 
 spotless: clean
 	\rm -f $(MAIN).ps $(MAIN).pdf
