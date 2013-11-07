@@ -3,3 +3,24 @@ data-science-seminar
 
 Literature survey of Topic Model. 
 
+## LSA/LSI
+* general
+    1. Deerwester, Scott C., et al. "Indexing by latent semantic analysis." JASIS 41.6 (1990): 391-407.
+    2. Landauer, Thomas K., Peter W. Foltz, and Darrell Laham. "An introduction to latent semantic analysis." Discourse processes 25.2-3 (1998): 259-284.
+* SVD
+    1. Intuitive geometry interpretation: http://www.ams.org/samplings/feature-column/fcarc-svd
+
+## pLSA
+1. Hofmann, Thomas. "Probabilistic latent semantic analysis." Proceedings of the Fifteenth conference on Uncertainty in artificial intelligence. Morgan Kaufmann Publishers Inc., 1999.
+
+## LDA
+* general
+    1. Blei, David M., Andrew Y. Ng, and Michael I. Jordan. "Latent dirichlet allocation." the Journal of machine Learning research 3 (2003): 993-1022.
+* inference
+    1. Variable elimination(paper?)
+    2. Gibbs sampling(paper?)
+    3. Variational Inference
+        1. Jordan, Michael I., et al. An introduction to variational methods for graphical models. Springer Netherlands, 1998.
+        2. Wainwright, Martin J., and Michael I. Jordan. "Graphical models, exponential families, and variational inference." Foundations and Trends® in Machine Learning 1.1-2 (2008): 1-305.
+* parameter estimation
+    1. Heinrich, Gregor. "Parameter estimation for text analysis." Web: http://www. arbylon. net/publications/text-est. pdf (2005).
