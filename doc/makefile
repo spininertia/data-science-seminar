@@ -14,7 +14,7 @@ $(MAIN).pdf: $(MAIN).tex
 	pdflatex $(MAIN).tex
 
 clean:
-	\rm -f *.dvi *.bbl *.aux *.log *.blg *.toc main.pdf
+	\rm -f *.dvi *.bbl *.aux *.log *.blg *.toc main.pdf *.out
 
 spotless: clean
 	\rm -f $(MAIN).ps $(MAIN).pdf
