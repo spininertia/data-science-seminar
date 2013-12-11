@@ -1,7 +1,7 @@
 Latent Semantic Analysis (LSA) is a methodology for extracting and representing hidden contextual relation between words and topics by statistical techniques\cite{landauer1998introduction}. LSA is typically applied to large volume of text corpus, and it can often discover contextual relations between words even if they haven't appeared together. (More illustration of LSA's idea). 
 
 \subsection{Singular Value Decomposition}
-Intro to SVD.
+The singular value decomposition (SVD) is a factorization technique of a real or complex matrix in linear algebra. LSA assumes that words that are close in meaning will occur in similar pieces of text. A matrix containing word counts per paragraph (rows represent unique words and columns represent each paragraph) is constructed from a large piece of text and use SVD to reduce the number of columns while preserving the similarity structure among rows. Words are then compared by taking the cosine of the angle between the two vectors formed by any two rows. Values close to 1 represent very similar words while values close to 0 represent very dissimilar words. \cite{dumais1995latent}
 
 \subsection{Inperpretation}
 Analysis of LSA, and its relation with research of Human Knowledge, Information Retrieval, Psychology.
