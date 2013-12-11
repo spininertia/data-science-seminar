@@ -3,7 +3,28 @@ LDA\cite{blei2003latent} is a natural extension to pLSA. There are several obvio
 Based on the representation theorem due to Finetti\cite{de1970theory}, LDA puts the generation of document and topic in a probability setting, which leads to a fully probabilistic model. 
 
 \subsection{Graphical Model}
-Intro to graph model. \cite{jordan1998introduction}
+Graph Model is a powerful tool in multivariate probability distribution. It's designed to help design efficient learning and inference algorithms. The key insight of graph modeling is that in many real world probability distributions, the joint probability distributions can be factored into several smaller local probability distribution. The advantage of this factorization leads to much smaller model complexity. It turns out that this convenient property is closely related to the conditional independence between the random variables. Thus in graph modeling, it's relatively easy to spot conditional independent relationships between variables by just observing the graph structure of the graph model. Actually this is the major reason why people favor it. Next we'll introduce two major types of graph modeling techniques. 
+
+\subsubsection{Undirected Model}
+The notation we use follows \cite{}. We considers probability distributions over two sets of random variables, $V=X \cup Y$, where X is the set of \emph{input variables} that are observed, and Y is the set of \emph{output variables} that we want to predict. The domain of each variable's outcome can be continuous or discrete. An arbitrary assignment to X is denoted by a vector {\bf x}. Given a variable $s \in X$, the notation $x_{s}$ denotes the value assigned to s by {\bf x}. ${\bf 1}_{x=x'}$ denotes an indicator function of x which takes value 1 when $x=x'$ and 0 otherwise. 
+
+We assume the probability distribution can be represented by a product of \emph{factors} of the form $\Psi_{a}(x_{a},y_{a})$,where each factor has scope $a \subset V$. The gain for this representation is that each subset contains a much smaller number of variables. 
+
+An undirected model is a family of probability distributions that factorize according to given collections of scopes. Given a collections of subsets $\mathcal{F}=a \subset V$, an \emph{undirected graphical model} is defined as the set of all distributions that can be written as :
+
+\begin{equation}
+p(x,y) = \frac{1}{Z} \prod_{a \in \mathcal{F}} \Psi_{a}(x_{a},y_{a})
+\end{equation}
+
+for any choice of \emph{local function} $F = {\Psi_{a}}$. The Z is just a normalization constant to make the probability sum to 1. 
+
+\subsubsection{Directed Model}
+Different from the \emph{local function} in undirected graph models that do not have a direct probabilistic interpretation, a \emph{directed graphical model} describes how a distribution factorizes into local conditional probability distributions. Let $G=(V,E)$ be a directed acyclic graph, in which $\pi_{v}$ are the parents of v in G. A directed graph model is a family of distributions that factorize as:
+\begin{equation}
+p(y,x)=\prod_{v \in V} p(y_{v}|y_{\pi(v)})
+\end{equation}
+
+As we can observe from the formula, a directed graph model can be seen as a kind of factor graph. The \emph{local function} is automatically normalized, thus Z=1. It's used in generative models extensively. 
 
 \subsection{Learning}
 Parameter estimation for LDA. \cite{heinrich2005parameter}
