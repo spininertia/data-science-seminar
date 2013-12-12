@@ -26,14 +26,53 @@ p(y,x)=\prod_{v \in V} p(y_{v}|y_{\pi(v)})
 
 As we can observe from the formula, a directed graph model can be seen as a kind of factor graph. The \emph{local function} is automatically normalized, thus Z=1. It's used in generative models extensively. 
 
-\subsection{Learning}
-Parameter estimation for LDA. \cite{heinrich2005parameter}
-
 \subsection{Inference}
-There are many approximate algorithms of inference. We will survey some simple and effective ones.
+Although Latent Dirichlet allocation is a rather simple model, exact inference is generally intractable. The solution to this is to use approximate inference algorithms, such as mean-field variational expectation maximization \cite{blei2003latent}, expectation propagation\cite{minka2002expectation} and Gibbs sampling \cite{griffiths2002gibbs}. In the following, we briefly introduce two of them, Gibbs Sampling and variational inference.
 
 \subsubsection{Gibbs Sampling}
-\cite{casella1992explaining}
+Gibbs Sampling method is a special case of Markov-chain Monte Carlo(MCMC) simulation, it often yields relatively simple algorithms for approximate inference in high dimensional models such as LDA. MCMC methods can emulate high-dimensionality probability distributions $p(\vec{x})$ by the stationary behavior of a Markov chain. This means that one sample is generated for each transit in the chain after a stationary state of the chain has been reached. Gibbs sampling is a special case of MCMC where the dimensions $x_i$ of the distribution are sampled alternatively one at a time, conditioned on the values of all other dimensions. The algorithm can be roughly described as follows:
+\begin{enumerate}
+\item choose dimension i 
+\item sample $x_i$ from $p(x_i | \vec{x}_{\neg i})$
+\end{enumerate}
+To build the gibbs sampler, the conditional probability $p(x_i | \vec{x}_{\neg i})$ must be found. For models that contain hidden variables $\vec{z}$, the gibbs sampler can be represented as:
+\begin{equation}
+p(z_i | \vec{z}_{\neg i}, \vec{x}) = \frac{p(\vec{z}, \vec{x})}{p(\vec{z}_{\neg i}, \vec{x})} =  \frac{p(\vec{z}, \vec{x})}{\int_Z p(\vec{z}, \vec{x}) d_{z_i}}
+\end{equation} 
+where the integral changes to a sum for discrete variables. With a sufficient number of samples $\vec{z}_r^{\sim}$ where $r \in [1, R]$, the latent-cariable posterior can be approximated using formula:
+\begin{equation} 
+p(\vec{z}|\vec{x}) \approx \frac{1}{R}\sum_{r=1}^R\delta(\vec{z} - \vec{z}_r^{\sim}),
+\end{equation}
+with the Kronecker delta $\delta(\vec(u)) = \{1 if \vec(u) = 0; 0, otherwise\}$.
+
+Applying gibbs sampling algorithm to the inference of LDA yields:
+\begin{equation}
+\phi_{k, t} = \frac{n_k^{(t)} + \beta_t}{\sum_{t=1}^Vn_k^{(t)} + \beta_t},
+\end{equation}
+
+\begin{equation}
+\theta_{m,k} = \frac{n_m^{(k)} + \alpha_k}{\sum_{k=1}^K n_m^{(k)} + \alpha_k},
+\end{equation}
+where $n_k^{(t)}$ represent the count for term t that occurs in topic t, and $n_m^{(k)}$ represents the count of terms in document m that belongs to topic k.
+
+The Gibbs sampling algorithm runs over the three periods: initialization, burn-in and sampling. However, to determine the required lengths of the burn-in is one of the drawbacks with MCMC approaches. There exists several criteria to check that the Markov chain has converged \cite{liu2008monte}.
+
+\subsubsection{Variational Inference}
+The basic idea of convexity-based variational inference is to make use of Jensen’s inequality to obtain an adjustable lower bound on the log likelihood. Essentially, one considers a family of lower bounds, indexed by a set of variational parameters. The variational parameters are chosen by an optimization procedure that attempts to find the tightest possible lower bound.
+
+A simple way to obtain a tractable family of lower bounds is to consider simple modifications of the original graphical model in which some of the edges and nodes are removed. The intractable essence for the inference of original model is caused by the problematic coupling between $\theta$ and $\beta$. By dropping the edges with $w$ and the $w$ nodes, we obtain a family of distributions on the latent variables. This family is characterized by the following variational distribution
+\begin{equation}
+q(\theta, z|\gamma, \Phi) = q(\theta|\gamma)\Pi_{n=1}^Nq(z_n|\Phi_n)
+\end{equation}
+where the dirichlet parameter $\gamma$ and the multinomial parameters $\Phi$ are the free variational parameters. Having this simplified parameters, we try to find the tight lower bound on the likelihood function:
+\begin{equation}
+(\gamma^*, \Phi^*) = argmin_{\gamma, \Phi}D(q(\theta|\gamma)\Pi_{n=1}^Nq(z_n|\Phi_n) || p(\theta, z| w, \alpha, \beta)).
+\end{equation}
+This is just seeking the variational parameters that minimize the KL-divergence between the variational distribution and the original posterior function. We can solve this optimization problem by iteratively doing dirichlet update(details in paper \cite{blei2003latent}). Having the optimal variation parameter, we can do tractable approximate inference of LDA using this simplified distribution. 
+
+\subsection{Learning}
+In the inference step, we assume the corpus-wise parameters $\alpha$, $\beta$ are known. Typically, in LDA symmetric Dirichlet priors are used, which means that the a priori assumption of the model is that all topics have the same chance of being assigned to a document and all words (frequent and infrequent ones) have the same chance of being assigned to a topic. 
+But there are methods that utilize the count in Gibbs Sampling or learned variational distribution in Variational Inference to estimate the Dirichlet parameters $\vec{\alpha}$. We won't talk about the detail of the techniques, for reference, see paper\cite{heinrich2005parameter}\cite{blei2003latent}
 
 
 \subsection{Extension}
