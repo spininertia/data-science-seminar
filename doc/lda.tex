@@ -35,4 +35,8 @@ There are many approximate algorithms of inference. We will survey some simple a
 \subsubsection{Gibbs Sampling}
 \cite{casella1992explaining}
 
-\subsubsection{Variational Method}
+
+\subsection{Extension}
+A natural extension to LDA is the ability to model the correlation between topics. \cite{lafferty2005correlated} presented a way to encode the correlation between topics by replacing Dirichlet distribution with a logistic normal distribution. \cite{griffiths2004hierarchical} proposed another approach to this goal, which is called hierarchical LDA(hLDA), by join the topics in a hierarchy using Chinese restaurant process. In addition to model the topic relationship, several work extend the application beyond document analysis. \cite{shu2009latent} extends LDA to handle heterogeneous data, in other words, there are two type of information in a document, words and names. 
+
+Another promising direction is develop nonparametric version of LDA. Hierarchical Dirichlet process mixture model \cite{teh2006hierarchical} can learn the number of topics from data. Nested Chinese Restaurant Process \cite{griffiths2004hierarchical} allows topics to be structured in a hierarchical structure which is also learnt from data. 
